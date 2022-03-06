@@ -38,7 +38,13 @@
 	const play = () => {
 		animations = [];
 
-		animations.push(document.getElementById('topleft').animate(wallBuildTopLeft, wallBuildTiming));
+		const topLeftObject = document.getElementById('topleft');
+		const topLeftAnim = topLeftObject.animate(wallBuildTopLeft, wallBuildTiming);
+		topLeftAnim.onfinish = () => {
+			topLeftObject.style.fill = 'var(--color-green)';
+		};
+
+		animations.push(topLeftAnim);
 
 		animations.push(
 			document.getElementById('topright').animate(wallBuildTopRight, wallBuildTiming)
@@ -61,6 +67,10 @@
 		e.preventDefault();
 		document.getElementById('instructions').style.opacity = '0.1';
 		animations.forEach((a) => a.cancel());
+
+		const topLeftObject = document.getElementById('topleft');
+		topLeftObject.style.fill = 'black';
+
 		play();
 	};
 
@@ -70,13 +80,7 @@
 	};
 </script>
 
-<div
-	class="wrapper"
-	on:mousedown={handleStart}
-	on:touchstart={handleStart}
-	on:mouseup={handleStop}
-	on:touchend={handleStop}
->
+<div class="wrapper" on:mousedown={handleStart} on:touchstart={handleStart}>
 	<svg id="wall" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
 		<defs>
 			<style>
@@ -107,7 +111,7 @@
 	</svg>
 	<div id="instructions">
 		<h1>cotswolds<br />digital.</h1>
-		<h2>(press and hold)</h2>
+		<h2>(press)</h2>
 	</div>
 </div>
 
@@ -163,7 +167,11 @@
 
 	svg {
 		width: 100%;
-		max-width: 6000px;
+		max-width: 600px;
+	}
+
+	svg * {
+		transition: fill 0.5s ease-in-out;
 	}
 
 	svg path {
