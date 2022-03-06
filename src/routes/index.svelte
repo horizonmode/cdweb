@@ -114,6 +114,15 @@
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;800&display=swap');
 
+	:root {
+		--color-grey: #979387;
+		--color-light-grey: #d5d4cc;
+		--color-dark-grey: #484641;
+		--color-green: #245941;
+		--color-light-green: #369c9b;
+		--color-pink: #d28797;
+	}
+
 	h1 {
 		white-space: pre-line;
 		font-weight: 800;
@@ -154,7 +163,7 @@
 
 	svg {
 		width: 100%;
-		max-width: 350px;
+		max-width: 6000px;
 	}
 
 	svg path {
