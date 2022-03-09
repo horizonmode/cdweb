@@ -1,4 +1,10 @@
 <script>
+	import gsap from 'gsap';
+
+	let introAnimationComplete = false;
+	let zoomed = false;
+	let zoomTimeline;
+
 	const wallBuildTopLeft = [
 		{ transform: 'translate3D(-50%, -50%, 0)' },
 		{ opacity: 0.9 },
@@ -26,11 +32,29 @@
 		{ opacity: 0.9 },
 		{ transform: 'translate3D(0,0,0)', opacity: 1 }
 	];
+
 	const wallBuildTiming = {
 		easing: 'ease-out',
 		duration: 2000,
 		iterations: 1,
 		fill: 'both'
+	};
+
+	const expandItem = (item) => {
+		const expandItemAnim = [
+			{ transform: 'translate3D(50%, 0%, 0)' },
+			{ opacity: 0.9 },
+			{ transform: 'translate3D(0,0,0)', opacity: 1 }
+		];
+
+		const expandTiming = {
+			easing: 'ease-out',
+			duration: 2000,
+			iterations: 1,
+			fill: 'both'
+		};
+
+		item.animate(expandItemAnim, expandTiming);
 	};
 
 	let animations = [];
@@ -40,8 +64,11 @@
 
 		const topLeftObject = document.getElementById('topleft');
 		const topLeftAnim = topLeftObject.animate(wallBuildTopLeft, wallBuildTiming);
+
 		topLeftAnim.onfinish = () => {
-			topLeftObject.style.fill = 'var(--color-green)';
+			introAnimationComplete = true;
+			topLeftObject.classList.add('active');
+			topLeftObject.addEventListener('mousedown touchstart', () => expandItem(topLeftObject));
 		};
 
 		animations.push(topLeftAnim);
@@ -65,58 +92,92 @@
 
 	const handleStart = (e) => {
 		e.preventDefault();
-		document.getElementById('instructions').style.opacity = '0.1';
-		animations.forEach((a) => a.cancel());
+		if (introAnimationComplete) return;
 
-		const topLeftObject = document.getElementById('topleft');
-		topLeftObject.style.fill = 'black';
+		document.getElementById('instructions').style.opacity = '0';
 
 		play();
 	};
 
-	const handleStop = (e) => {
-		document.getElementById('instructions').style.opacity = '1';
-		animations.forEach((a) => a.reverse());
+	const handleZoom = (width, height, x, y) => {
+		if (zoomed) {
+			console.log(zoomTimeline);
+			zoomTimeline.reverse();
+			zoomed = false;
+			return;
+		}
+
+		zoomed = true;
+		zoomTimeline = gsap.timeline({ repeat: 0 });
+		zoomTimeline.add('start');
+		zoomTimeline.to('#wall', { attr: { viewBox: `${x} ${y} ${width} ${height}` } }, 'start');
+		zoomTimeline.to('#container', { transform: 'rotate(0,100,50)' }, 'start');
+		zoomTimeline.play();
 	};
 </script>
 
 <div class="wrapper" on:mousedown={handleStart} on:touchstart={handleStart}>
-	<svg id="wall" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+	<svg id="wall" xmlns="http://www.w3.org/2000/svg" viewBox="70 10 75 75">
 		<defs>
 			<style>
-				.cls- 1 {
-					fill: #1d1d1b;
+				.cls-1 {
+					fill: black;
+					stroke: black;
+					stroke-width: 2;
+				}
+
+				.cls-1 {
+					stroke: #1d1d1b;
+				}
+
+				.cls-2 {
+					stroke: none;
+					font-size: 4px;
+					font-weight: 400;
+					fill: none;
+				}
+				.active rect {
+					stroke: var(--color-green);
+					fill: var(--color-green);
+				}
+				.active text {
+					stroke: none;
+					fill: black;
 				}
 			</style>
 		</defs>
-		<g id="Layer1">
-			<path id="topleft" class="cls-1" d="M0,0V31.84L59.31,21.68a3.92,3.92,0,0,0,3-4.52L59.82,0Z" />
-			<path
-				id="bottomleft"
-				class="cls-1"
-				d="M0,35l38.58-6.61a3.69,3.69,0,0,1,4.19,3.27L52.88,100H0Z"
-			/>
-			<path id="topright" class="cls-1" d="M62,0l2.7,16.76A3.7,3.7,0,0,0,68.89,20L100,14.74V.07Z" />
-			<path
-				id="rightmid"
-				class="cls-1"
-				d="M45.22,31l5.13,34.68a3.69,3.69,0,0,0,4.19,3.27L100,61.15V17.61L48.27,26.48A3.92,3.92,0,0,0,45.22,31Z"
-			/>
-			<path
-				id="bottomright"
-				class="cls-1"
-				d="M51.9,76.17,55.42,100H99.28L100,63.93,54.94,71.65A3.92,3.92,0,0,0,51.9,76.17Z"
-			/>
+		<g id="container" data-name="Layer 2" transform="rotate(-15, 100, 50)">
+			<g id="bottomleft" class="menu-group">
+				<rect class="cls-1" y="34.7" width="98" height="65.33" rx="4.2" />
+			</g>
+			<g id="rightmid" class="menu-group">
+				<rect class="cls-1" x="102" y="34.7" width="98" height="30.67" rx="4.2" />
+			</g>
+			<g id="bottomright" class="menu-group">
+				<rect class="cls-1" x="102" y="69.3" width="98" height="30.67" rx="4.2" /></g
+			>
+			<g
+				id="topleft"
+				class="menu-group"
+				on:click={() => handleZoom(20, 20, -5, -5)}
+				on:touchstart={() => handleZoom(20, 20, -5, -5)}
+			>
+				<rect class="cls-1" width="115.8" height="30.67" rx="4.2" />
+				<text class="cls-2" transform="translate(92 28)">About Us</text>
+			</g>
+			<g id="topright" class="menu-group"
+				><rect class="cls-1" x="119.3" width="80.4" height="30.67" rx="4.2" /></g
+			>
 		</g>
 	</svg>
 	<div id="instructions">
-		<h1>cotswolds<br />digital.</h1>
-		<h2>(press)</h2>
+		<h1>cotswolds<br />cloud.</h1>
 	</div>
 </div>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;800&display=swap');
+	@import url('../reset.css');
+	@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;400;500;600;700;800;900&display=swap');
 
 	:root {
 		--color-grey: #979387;
@@ -125,6 +186,10 @@
 		--color-green: #245941;
 		--color-light-green: #369c9b;
 		--color-pink: #d28797;
+	}
+
+	:global(body) {
+		font-family: 'Spartan', sans-serif;
 	}
 
 	h1 {
@@ -147,6 +212,13 @@
 		align-items: center;
 		justify-content: center;
 		position: relative;
+		padding: 0;
+	}
+
+	@media screen and (min-width: 600px) {
+		.wrapper {
+			padding: 3rem;
+		}
 	}
 
 	.wrapper,
@@ -166,15 +238,14 @@
 	}
 
 	svg {
-		width: 100%;
-		max-width: 600px;
+		height: 100%;
+		width: auto;
 	}
 
 	svg * {
-		transition: fill 0.5s ease-in-out;
+		transition: fill 0.5s ease-in-out, stroke 0.5s ease-in-out;
 	}
-
-	svg path {
+	svg .menu-group {
 		opacity: 0;
 	}
 </style>
