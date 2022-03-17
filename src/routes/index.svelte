@@ -203,11 +203,6 @@
 		font-size: 4rem;
 	}
 
-	h2 {
-		font-weight: 100;
-		font-size: 0.8rem;
-	}
-
 	.wrapper {
 		width: 100vw;
 		height: 100vh;
@@ -229,8 +224,8 @@
 	}
 
 	.content {
-		width: 100vw;
-		height: 100vh;
+		width: 100%;
+		height: 100%;
 		position: absolute;
 		filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.75));
 		z-index: calc(3 - var(--n));
@@ -285,8 +280,6 @@
 		position: absolute;
 		right: 12rem;
 		top: 1rem;
-		font-weight: 800;
-		font-size: 2rem;
 		color: white;
 		text-decoration: underline;
 	}
