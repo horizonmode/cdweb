@@ -111,7 +111,11 @@
 			{ transform: 'translateX(-80%) rotate(349deg)', duration: 0.5, ease: 'power2.out' },
 			'start'
 		);
-		exitTimeline.to('.stack2', { transform: 'translate3D(0,0,0)', duration: 0.5 }, 'start');
+		exitTimeline.to(
+			'.stack2',
+			{ transform: 'translate3D(0,0,0)', top: 0, left: 0, duration: 0.5 },
+			'start'
+		);
 		exitTimeline.play();
 
 		document.documentElement.style.setProperty('--current-theme-main', 'var(--color-green)');
