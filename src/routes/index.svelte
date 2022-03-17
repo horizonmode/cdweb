@@ -69,7 +69,7 @@
 		);
 	};
 
-	const handleStart = (e) => {
+	const handleChange = (e) => {
 		e.preventDefault();
 
 		const exitTimeline = gsap.timeline({ repeat: 0 });
@@ -95,7 +95,7 @@
 	};
 </script>
 
-<div class="wrapper" on:mousedown={handleStart} on:touchstart={handleStart}>
+<div class="wrapper" on:mousedown={handleChange} on:touchstart={handleChange}>
 	<h1 id="company-name">cotswold<br />cloud.</h1>
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="70 10 75 75" preserveAspectRatio="xMinYMid meet">
 		<defs>
@@ -113,7 +113,6 @@
 					fill: none;
 				}
 				.active rect {
-					stroke: var(--current-theme-main);
 					fill: var(--current-theme-main);
 				}
 				.active text {
