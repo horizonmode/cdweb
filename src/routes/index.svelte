@@ -240,7 +240,7 @@
 
 	.wrapper #company-name {
 		position: fixed;
-		top: 1rem;
+		bottom: 1rem;
 		left: 1rem;
 		z-index: 10;
 		line-height: 4rem;
@@ -327,7 +327,7 @@
 		height: 10rem;
 		width: auto;
 		position: fixed;
-		bottom: 1rem;
+		top: 1rem;
 		left: 1rem;
 		z-index: 10;
 	}
