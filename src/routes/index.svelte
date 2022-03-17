@@ -84,7 +84,7 @@
 		console.log(nextSection);
 		exitTimeline.to(
 			`#${nextSection.name}`,
-			{ transform: 'translate3D(0,0,0)', top: 0, left: 0, duration: 0 },
+			{ transform: 'rotate(0)', top: 0, left: 0, duration: 0 },
 			'start'
 		);
 		exitTimeline.play();
@@ -231,10 +231,12 @@
 		z-index: calc(3 - var(--n));
 	}
 
-	.content.stack {
-		left: 3px + calc(var(--n) * 2px);
-		top: 8px + calc(var(--n) * 2px);
-		transform: rotate(calc(var(--n) * 2.5deg));
+	.content.stack::before {
+		/* left: calc(3px + var(--n) * 2px);
+		top: calc(8px + var(--n) * 2px);
+		transform: rotate(calc(var(--n) * 2.5deg)); */
+		left: 8px;
+		transform: scaleY(calc(1 + var(--n) * 0.05)) rotate(calc(var(--n) * 1deg));
 	}
 	.content.pink::before {
 		background-color: var(--color-pink);
