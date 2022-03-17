@@ -1,9 +1,14 @@
 <script>
 	import gsap from 'gsap';
 
-	let introAnimationComplete = false;
-	let zoomed = false;
-	let zoomTimeline;
+	const sections = [
+		{ name: 'whatwedo', color: 'var(--color-pink)' },
+		{ name: 'aboutus', color: 'var(--color-green)' },
+		{ name: 'work', color: 'var(--color-light-grey)' }
+	];
+	let sectionIndex = 0;
+	$: activeSection = sections[sectionIndex];
+	console.log(activeSection);
 
 	const wallBuildTopLeft = [
 		{ transform: 'translate3D(-50%, -50%, 0)' },
@@ -40,48 +45,12 @@
 		fill: 'both'
 	};
 
-	const exitAnim = [{ transform: 'translateX(-100%)' }];
-
-	const exitAnimTiming = {
-		easing: 'ease-out',
-		duration: 1000,
-		iterations: 1,
-		fill: 'both'
-	};
-
-	const expandItem = (item) => {
-		const expandItemAnim = [
-			{ transform: 'translate3D(50%, 0%, 0)' },
-			{ opacity: 0.9 },
-			{ transform: 'translate3D(0,0,0)', opacity: 1 }
-		];
-
-		const expandTiming = {
-			easing: 'ease-out',
-			duration: 2000,
-			iterations: 1,
-			fill: 'both'
-		};
-
-		item.animate(expandItemAnim, expandTiming);
-	};
-
 	let animations = [];
 
 	const play = () => {
 		animations = [];
 
-		const topLeftObject = document.getElementById('topleft');
-		const topLeftAnim = topLeftObject.animate(wallBuildTopLeft, wallBuildTiming);
-
-		topLeftAnim.onfinish = () => {
-			introAnimationComplete = true;
-
-			topLeftObject.classList.add('active');
-			//topLeftObject.addEventListener('mousedown touchstart', () => expandItem(topLeftObject));
-		};
-
-		animations.push(topLeftAnim);
+		animations.push(document.getElementById('topleft').animate(wallBuildTopLeft, wallBuildTiming));
 
 		animations.push(
 			document.getElementById('topright').animate(wallBuildTopRight, wallBuildTiming)
@@ -102,42 +71,27 @@
 
 	const handleStart = (e) => {
 		e.preventDefault();
-		if (introAnimationComplete) return;
 
 		const exitTimeline = gsap.timeline({ repeat: 0 });
 		exitTimeline.add('start');
 		exitTimeline.to(
-			'.stack1',
+			`#${activeSection.name}`,
 			{ transform: 'translateX(-80%) rotate(349deg)', duration: 0.5, ease: 'power2.out' },
 			'start'
 		);
+
+		const nextSection = sections[sectionIndex == sections.length - 1 ? 0 : ++sectionIndex];
+		console.log(nextSection);
 		exitTimeline.to(
-			'.stack2',
-			{ transform: 'translate3D(0,0,0)', top: 0, left: 0, duration: 0.5 },
+			`#${nextSection.name}`,
+			{ transform: 'translate3D(0,0,0)', top: 0, left: 0, duration: 0 },
 			'start'
 		);
 		exitTimeline.play();
 
-		document.documentElement.style.setProperty('--current-theme-main', 'var(--color-green)');
-		document.getElementById('rightmid').classList.remove('active');
+		document.documentElement.style.setProperty('--current-theme-main', nextSection.color);
 
 		play();
-	};
-
-	const handleZoom = (width, height, x, y) => {
-		if (zoomed) {
-			console.log(zoomTimeline);
-			zoomTimeline.reverse();
-			zoomed = false;
-			return;
-		}
-
-		zoomed = true;
-		zoomTimeline = gsap.timeline({ repeat: 0 });
-		zoomTimeline.add('start');
-		zoomTimeline.to('#wall', { attr: { viewBox: `${x} ${y} ${width} ${height}` } }, 'start');
-		zoomTimeline.to('#container', { transform: 'rotate(0,100,50)' }, 'start');
-		zoomTimeline.play();
 	};
 </script>
 
@@ -147,13 +101,9 @@
 		<defs>
 			<style>
 				.cls-1 {
-					fill: black;
-					stroke: black;
+					fill: white;
+					stroke: white;
 					stroke-width: 2;
-				}
-
-				.cls-1 {
-					stroke: #1d1d1b;
 				}
 
 				.cls-2 {
@@ -163,8 +113,8 @@
 					fill: none;
 				}
 				.active rect {
-					stroke: var(--color-green);
-					fill: var(--color-green);
+					stroke: var(--current-theme-main);
+					fill: var(--current-theme-main);
 				}
 				.active text {
 					stroke: none;
@@ -173,36 +123,30 @@
 			</style>
 		</defs>
 		<g id="container" data-name="Layer 2" transform="rotate(-15, 100, 50)">
-			<g id="bottomleft" class="menu-group">
+			<g id="bottomleft" class={`menu-group ${activeSection.name === 'work' && 'active'}`}>
 				<rect class="cls-1" y="34.7" width="98" height="65.33" rx="4.2" />
 			</g>
-			<g id="rightmid" class="menu-group active">
+			<g id="rightmid" class={`menu-group ${activeSection.name === 'whatwedo' && 'active'}`}>
 				<rect class="cls-1" x="102" y="34.7" width="98" height="30.67" rx="4.2" />
 			</g>
 			<g id="bottomright" class="menu-group">
 				<rect class="cls-1" x="102" y="69.3" width="98" height="30.67" rx="4.2" /></g
 			>
-			<g
-				id="topleft"
-				class="menu-group"
-				on:click={() => handleZoom(20, 20, -5, -5)}
-				on:touchstart={() => handleZoom(20, 20, -5, -5)}
-			>
+			<g id="topleft" class={`menu-group ${activeSection.name === 'aboutus' && 'active'}`}>
 				<rect class="cls-1" width="115.8" height="30.67" rx="4.2" />
-				<text class="cls-2" transform="translate(92 28)">About Us</text>
 			</g>
 			<g id="topright" class="menu-group"
 				><rect class="cls-1" x="119.3" width="80.4" height="30.67" rx="4.2" /></g
 			>
 		</g>
 	</svg>
-	<div class="content pink stack1" id="instructions">
+	<div class="content pink" id="whatwedo" style="--n: 0">
 		<div class="page-title"><h1>What we do.</h1></div>
 		<div class="content-box">
 			<h1>web design / ux / development.</h1>
 		</div>
 	</div>
-	<div class="content green stack2" id="instructions">
+	<div class="content green stack" id="aboutus" style="--n: 1">
 		<div class="page-title"><h1>About Us.</h1></div>
 		<div class="content-box">
 			<p>
@@ -219,7 +163,7 @@
 			</p>
 		</div>
 	</div>
-	<div class="content grey stack3" id="instructions">
+	<div class="content grey stack" id="work" style="--n: 2">
 		<div class="page-title"><h1>Work.</h1></div>
 		<div class="content-box">
 			<p>Our Work</p>
@@ -241,16 +185,9 @@
 		--current-theme-offset: var(--color-white);
 	}
 
-	.green {
-		color: var(--color-green);
-	}
-
-	.grey {
-		color: var(--color-light-grey);
-	}
-
 	:global(body) {
 		font-family: 'Spartan', sans-serif;
+		overflow: hidden;
 	}
 
 	@media only screen and (max-width: 600px) {
@@ -275,11 +212,6 @@
 	.wrapper {
 		width: 100vw;
 		height: 100vh;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: relative;
-		padding: 0;
 	}
 
 	.wrapper #company-name {
@@ -300,35 +232,16 @@
 	.content {
 		width: 100vw;
 		height: 100vh;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: relative;
-		padding: 0;
-
+		position: absolute;
 		filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.75));
+		z-index: calc(3 - var(--n));
 	}
 
-	.content.stack1 {
-		z-index: 3;
+	.content.stack {
+		left: 3px + calc(var(--n) * 2px);
+		top: 8px + calc(var(--n) * 2px);
+		transform: rotate(calc(var(--n) * 2.5deg));
 	}
-
-	.content.stack2 {
-		z-index: 2;
-		position: relative;
-		left: 5px;
-		top: 10px;
-		transform: rotate(2deg);
-	}
-
-	.content.stack3 {
-		z-index: 1;
-		position: relative;
-		left: 8px;
-		top: 12.5px;
-		transform: rotate(5deg);
-	}
-
 	.content.pink::before {
 		background-color: var(--color-pink);
 	}
@@ -344,10 +257,10 @@
 	.content::before {
 		content: '';
 		width: 100%;
-		height: 100%;
+		height: 110%;
 		border-radius: 0 0 20px 0;
 		position: absolute;
-		top: 0;
+		bottom: 0;
 		right: 0;
 		/* transform-origin: bottom left;
 		transform: rotateZ(-5deg); */
@@ -369,14 +282,6 @@
 		color: white;
 	}
 
-	#instructions {
-		text-align: center;
-		position: absolute;
-		font-family: 'Spartan', sans-serif;
-		transition: opacity 2s;
-		color: var(--current-theme-offset);
-	}
-
 	.page-title {
 		position: absolute;
 		right: 12rem;
@@ -396,23 +301,7 @@
 		z-index: 10;
 	}
 
-	svg .menu-group rect {
-		stroke: white;
-		fill: white;
-	}
-
-	svg .menu-group.active#rightmid rect {
-		fill: var(--color-pink);
-	}
-
-	svg .menu-group.active#topleft rect {
-		fill: var(--color-green);
-	}
-
 	svg * {
 		transition: fill 0.5s ease-in-out, stroke 0.5s ease-in-out;
-	}
-	svg .menu-group {
-		/* opacity: 0; */
 	}
 </style>
