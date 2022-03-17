@@ -1,0 +1,52 @@
+<svg id="wall" xmlns="http://www.w3.org/2000/svg" viewBox="70 10 75 75">
+    <defs>
+        <style>
+            .cls-1 {
+                fill: black;
+                stroke: black;
+                stroke-width: 2;
+            }
+
+            .cls-1 {
+                stroke: #1d1d1b;
+            }
+
+            .cls-2 {
+                stroke: none;
+                font-size: 4px;
+                font-weight: 400;
+                fill: none;
+            }
+
+            .active rect {
+                stroke: var(--color-green);
+                fill: var(--color-green);
+            }
+
+            .active text {
+                stroke: none;
+                fill: black;
+            }
+        </style>
+    </defs>
+    <g id="container" data-name="Layer 2" transform="rotate(-15, 100, 50)">
+        <g id="bottomleft" class="menu-group">
+            <rect class="cls-1" y="34.7" width="98" height="65.33" rx="4.2" />
+        </g>
+        <g id="rightmid" class="menu-group">
+            <rect class="cls-1" x="102" y="34.7" width="98" height="30.67" rx="4.2" />
+        </g>
+        <g id="bottomright" class="menu-group">
+            <rect class="cls-1" x="102" y="69.3" width="98" height="30.67" rx="4.2" />
+        </g>
+        <g id="topleft" class="menu-group" on:click={(e)=> handleZoom(e, 140, 90, 70, 10)}
+            on:touchstart={(e) => handleZoom(e, 140, 90, 70, 10)}
+            >
+            <rect class="box cls-1" width="115.8" height="30.67" rx="4.2" />
+            <text class="cls-2" transform="translate(92 28)">About Us</text>
+        </g>
+        <g id="topright" class="menu-group">
+            <rect class="cls-1" x="119.3" width="80.4" height="30.67" rx="4.2" />
+        </g>
+    </g>
+</svg>
