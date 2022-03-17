@@ -7,8 +7,7 @@
 		{ name: 'work', color: 'var(--color-light-grey)' }
 	];
 	let sectionIndex = 0;
-	$: activeSection = sections[sectionIndex];
-	console.log(activeSection);
+	$: activeSection = sections[sectionIndex] || { name: '', color: '' };
 
 	const wallBuildTopLeft = [
 		{ transform: 'translate3D(-50%, -50%, 0)' },
@@ -47,7 +46,7 @@
 
 	let animations = [];
 
-	const play = () => {
+	const playLogoAnimation = () => {
 		animations = [];
 
 		animations.push(document.getElementById('topleft').animate(wallBuildTopLeft, wallBuildTiming));
@@ -69,33 +68,46 @@
 		);
 	};
 
-	const handleChange = (e) => {
+	const handleChange = (e, index) => {
 		e.preventDefault();
+		const reverse = index < sectionIndex;
+		console.log(reverse);
+		const nextSectionIndex = reverse ? sectionIndex - 1 : sectionIndex + 1;
+
+		console.log(sectionIndex, nextSectionIndex);
+
+		const nextSection = sections[nextSectionIndex];
+		console.log(nextSection);
 
 		const exitTimeline = gsap.timeline({ repeat: 0 });
 		exitTimeline.add('start');
-		exitTimeline.to(
-			`#${activeSection.name}`,
-			{ transform: 'translateX(-80%) rotate(349deg)', duration: 0.5, ease: 'power2.out' },
-			'start'
-		);
 
-		const nextSection = sections[sectionIndex == sections.length - 1 ? 0 : ++sectionIndex];
-		console.log(nextSection);
-		exitTimeline.to(
-			`#${nextSection.name}`,
-			{ transform: 'rotate(0)', top: 0, left: 0, duration: 0 },
-			'start'
-		);
+		if (!reverse) {
+			exitTimeline.to(
+				`#${activeSection.name}`,
+				{ transform: 'translateX(-80%) rotate(349deg)', duration: 0.5, ease: 'power2.out' },
+				'start'
+			);
+		}
+
+		if (nextSection) {
+			exitTimeline.to(
+				`#${nextSection.name}`,
+				{ transform: 'translateX(0) rotate(0)', top: 0, left: 0, duration: reverse ? 0.5 : 0 },
+				'start'
+			);
+			document.documentElement.style.setProperty('--current-theme-main', nextSection.color);
+		}
+
+		sectionIndex = nextSectionIndex;
+
 		exitTimeline.play();
 
-		document.documentElement.style.setProperty('--current-theme-main', nextSection.color);
-
-		play();
+		playLogoAnimation();
 	};
 </script>
 
-<div class="wrapper" on:mousedown={handleChange} on:touchstart={handleChange}>
+<div class="wrapper">
 	<h1 id="company-name">cotswold<br />cloud.</h1>
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="70 10 75 75" preserveAspectRatio="xMinYMid meet">
 		<defs>
@@ -139,13 +151,25 @@
 			>
 		</g>
 	</svg>
-	<div class="content pink" id="whatwedo" style="--n: 0">
+	<div
+		class="content pink"
+		id="whatwedo"
+		style="--n: 0"
+		on:mousedown={(e) => handleChange(e, 0)}
+		on:touchstart={(e) => handleChange(e, 0)}
+	>
 		<div class="page-title"><h1>What we do.</h1></div>
 		<div class="content-box">
 			<h1>web design / ux / development.</h1>
 		</div>
 	</div>
-	<div class="content green stack" id="aboutus" style="--n: 1">
+	<div
+		class="content green stack"
+		id="aboutus"
+		style="--n: 1"
+		on:mousedown={(e) => handleChange(e, 1)}
+		on:touchstart={(e) => handleChange(e, 1)}
+	>
 		<div class="page-title"><h1>About Us.</h1></div>
 		<div class="content-box">
 			<p>
@@ -162,7 +186,13 @@
 			</p>
 		</div>
 	</div>
-	<div class="content grey stack" id="work" style="--n: 2">
+	<div
+		class="content grey stack"
+		id="work"
+		style="--n: 2"
+		on:mousedown={(e) => handleChange(e, 2)}
+		on:touchstart={(e) => handleChange(e, 2)}
+	>
 		<div class="page-title"><h1>Work.</h1></div>
 		<div class="content-box">
 			<p>Our Work</p>
@@ -279,11 +309,18 @@
 	}
 
 	.page-title {
-		position: absolute;
-		right: 12rem;
-		top: 1rem;
-		color: white;
-		text-decoration: underline;
+		display: none;
+	}
+
+	@media only screen and (min-width: 600px) {
+		.page-title {
+			position: absolute;
+			right: 12rem;
+			top: 1rem;
+			color: white;
+			text-decoration: underline;
+			display: block;
+		}
 	}
 
 	svg {
