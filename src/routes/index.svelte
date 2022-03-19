@@ -109,12 +109,17 @@
 
 <div class="wrapper">
 	<h1 id="company-name">cotswold<br />cloud.</h1>
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="70 10 75 75" preserveAspectRatio="xMinYMid meet">
+	<svg
+		id="logo"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="-5 -5 30 30"
+		preserveAspectRatio="xMinYMin slice"
+	>
 		<defs>
 			<style>
 				.cls-1 {
-					fill: white;
-					stroke: white;
+					fill: black;
+					stroke: black;
 					stroke-width: 2;
 				}
 
@@ -133,7 +138,7 @@
 				}
 			</style>
 		</defs>
-		<g id="container" data-name="Layer 2" transform="rotate(-15, 100, 50)">
+		<g id="container" data-name="Layer 2" transform="rotate(0, 100, 50)">
 			<g id="bottomleft" class={`menu-group ${activeSection.name === 'work' && 'active'}`}>
 				<rect class="cls-1" y="34.7" width="98" height="65.33" rx="4.2" />
 			</g>
@@ -151,7 +156,7 @@
 			>
 		</g>
 	</svg>
-	<div
+	<!-- <div
 		class="content pink"
 		id="whatwedo"
 		style="--n: 0"
@@ -162,7 +167,7 @@
 		<div class="content-box">
 			<h1>web design / ux / development.</h1>
 		</div>
-	</div>
+	</div> -->
 	<div
 		class="content green stack"
 		id="aboutus"
@@ -186,7 +191,7 @@
 			</p>
 		</div>
 	</div>
-	<div
+	<!-- <div
 		class="content grey stack"
 		id="work"
 		style="--n: 2"
@@ -197,7 +202,7 @@
 		<div class="content-box">
 			<p>Our Work</p>
 		</div>
-	</div>
+	</div>  -->
 </div>
 
 <style>
@@ -244,6 +249,9 @@
 		left: 1rem;
 		z-index: 10;
 		line-height: 4rem;
+		background-color: black;
+		color: white;
+		border-radius: 5px;
 	}
 
 	.wrapper,
@@ -259,12 +267,14 @@
 		position: absolute;
 		filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.75));
 		z-index: calc(3 - var(--n));
+		top: 0;
+		left: 0;
 	}
 
-	.content.stack::before {
+	/* .content.stack::before {
 		/* left: calc(3px + var(--n) * 2px);
 		top: calc(8px + var(--n) * 2px);
-		transform: rotate(calc(var(--n) * 2.5deg)); */
+		transform: rotate(calc(var(--n) * 2.5deg));
 		left: 8px;
 		transform: scaleY(calc(1 + var(--n) * 0.05)) rotate(calc(var(--n) * 1deg));
 	}
@@ -289,13 +299,14 @@
 		bottom: 0;
 		right: 0;
 		/* transform-origin: bottom left;
-		transform: rotateZ(-5deg); */
+		transform: rotateZ(-5deg); 
 		-webkit-mask: url('/mask.svg');
 		mask: url('/mask.svg');
 		-webkit-mask-repeat: no-repeat;
 		-webkit-mask-size: 100% 100%;
 		mask-size: 100% 100%;
-	}
+		outline: black 2px solid;
+	} */
 
 	.content-box {
 		text-align: center;
@@ -323,13 +334,9 @@
 		}
 	}
 
-	svg {
-		height: 10rem;
-		width: auto;
-		position: fixed;
-		top: 1rem;
-		left: 1rem;
-		z-index: 10;
+	svg#logo {
+		height: 100%;
+		width: 100%;
 	}
 
 	svg * {
