@@ -112,8 +112,8 @@
 	<svg
 		id="logo"
 		xmlns="http://www.w3.org/2000/svg"
-		viewBox="-5 -5 30 30"
-		preserveAspectRatio="xMinYMin slice"
+		viewBox="75 10 50 75"
+		preserveAspectRatio="xMinYMin meet"
 	>
 		<defs>
 			<style>
@@ -138,7 +138,7 @@
 				}
 			</style>
 		</defs>
-		<g id="container" data-name="Layer 2" transform="rotate(0, 100, 50)">
+		<g id="container" data-name="Layer 2" transform="rotate(-15, 100, 50)">
 			<g id="bottomleft" class={`menu-group ${activeSection.name === 'work' && 'active'}`}>
 				<rect class="cls-1" y="34.7" width="98" height="65.33" rx="4.2" />
 			</g>
@@ -175,19 +175,10 @@
 		on:mousedown={(e) => handleChange(e, 1)}
 		on:touchstart={(e) => handleChange(e, 1)}
 	>
-		<div class="page-title"><h1>About Us.</h1></div>
+		<div class="page-title"><h1></h1></div>
 		<div class="content-box">
 			<p>
-				Cotswolds Digital is a creative digital agency founded by Seb and Andrew – friends, who met
-				as classmates during their MSc studies at Imperial College London in 2009. With more than 30
-				years of combined web development and digital experience, the pair have led and delivered
-				exciting projects for well-known organisations and brands all around the world. Now living
-				at opposite ends of the green and hilly Cotswolds, Seb and Andrew created Cotswolds Digital
-				to provide the same level of exceptional service they’ve become known for in their
-				professional careers, for local organisations. Our drive and competitiveness comes from our
-				love of web design, coupled with the buzz we get from making a real and lasting impact for
-				our clients. We’re nerds at heart, but sociable too. Why not drop us a line to see how we
-				could help you and your business?
+				
 			</p>
 		</div>
 	</div>
@@ -241,16 +232,19 @@
 	.wrapper {
 		width: 100vw;
 		height: 100vh;
+		display: flex;
+		justify-content: center; 
+
 	}
 
 	.wrapper #company-name {
 		position: fixed;
 		bottom: 1rem;
-		left: 1rem;
+		right: 1rem;
 		z-index: 10;
 		line-height: 4rem;
-		background-color: black;
-		color: white;
+		background-color: white;
+		color: black;
 		border-radius: 5px;
 	}
 
@@ -336,7 +330,7 @@
 
 	svg#logo {
 		height: 100%;
-		width: 100%;
+		width: auto;
 	}
 
 	svg * {
