@@ -1,4 +1,5 @@
 <script>
+
 	import gsap from 'gsap';
 
 	const sections = [
@@ -66,135 +67,131 @@
 		animations.push(
 			document.getElementById('rightmid').animate(wallBuildMidRight, wallBuildTiming)
 		);
-	};
-
-	const handleChange = (e, index) => {
-		e.preventDefault();
-		const reverse = index < sectionIndex;
-		console.log(reverse);
-		const nextSectionIndex = reverse ? sectionIndex - 1 : sectionIndex + 1;
-
-		console.log(sectionIndex, nextSectionIndex);
-
-		const nextSection = sections[nextSectionIndex];
-		console.log(nextSection);
-
-		const exitTimeline = gsap.timeline({ repeat: 0 });
-		exitTimeline.add('start');
-
-		if (!reverse) {
-			exitTimeline.to(
-				`#${activeSection.name}`,
-				{ transform: 'translateX(-80%) rotate(349deg)', duration: 0.5, ease: 'power2.out' },
-				'start'
-			);
-		}
-
-		if (nextSection) {
-			exitTimeline.to(
-				`#${nextSection.name}`,
-				{ transform: 'translateX(0) rotate(0)', top: 0, left: 0, duration: reverse ? 0.5 : 0 },
-				'start'
-			);
-			document.documentElement.style.setProperty('--current-theme-main', nextSection.color);
-		}
 
 		sectionIndex = nextSectionIndex;
 
-		exitTimeline.play();
-
-		playLogoAnimation();
+		// exitTimeline.play();
+		// playLogoAnimation();
 	};
+
 </script>
 
+
 <div class="wrapper">
+
 	<h1 id="company-name">cotswold<br />cloud.</h1>
+
 	<svg
 		id="logo"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="75 10 50 75"
 		preserveAspectRatio="xMinYMin meet"
 	>
+
+<script type="text/JavaScript">
+
+            <![CDATA[
+					function setViewBox(zoomValues){ 
+						var mySVG = document.getElementById('logo');
+						mySVG.setAttribute("viewBox", zoomValues);   
+						
+					}
+ 			]]>
+</script>
+
 		<defs>
 			<style>
-				.cls-1 {
+			.cls-about {
 					fill: black;
 					stroke: black;
 					stroke-width: 2;
 				}
 
-				.cls-2 {
-					stroke: none;
+				.cls-about:hover {
+					fill: #245941;
+					stroke: #245941;
+				}
+
+				.cls-work {
+					fill: black;
+					stroke: black;
+					stroke-width: 2;
+					pointer-events: all;
+				}
+
+				.cls-work:hover {
+					fill: #d28797;
+					stroke: #d28797;
+				}
+
+				.cls-services {
+					fill: black;
+					stroke: black;
+					stroke-width: 2;
+					pointer-events: all;
+				}
+
+				.cls-services:hover {
+					fill: #484641;
+					stroke: #484641;
+				}
+
+				.cls-contact {
+					fill: black;
+					stroke: black;
+					stroke-width: 2;
+					pointer-events: all;
+				}
+
+				.cls-contact:hover {
+					fill: #979387;
+					stroke: #979387;
+				}
+
+				.cls-recog {
+					stroke: black;
+					stroke-width: 2;
 					font-size: 4px;
 					font-weight: 400;
-					fill: none;
-				}
-				.active rect {
-					fill: var(--current-theme-main);
-				}
-				.active text {
-					stroke: none;
 					fill: black;
 				}
+
+				.cls-recog:hover {
+					fill: #369c6b;
+					stroke: #369c6b;
+				}
+				
 			</style>
 		</defs>
+
+
 		<g id="container" data-name="Layer 2" transform="rotate(-15, 100, 50)">
+
 			<g id="bottomleft" class={`menu-group ${activeSection.name === 'work' && 'active'}`}>
-				<rect class="cls-1" y="34.7" width="98" height="65.33" rx="4.2" />
+				<rect class="cls-about" y="34.7" width="98" height="65.33" rx="4.2" onClick="setViewBox('50 50 1 1')"/>
 			</g>
+
 			<g id="rightmid" class={`menu-group ${activeSection.name === 'whatwedo' && 'active'}`}>
-				<rect class="cls-1" x="102" y="34.7" width="98" height="30.67" rx="4.2" />
+				<rect class="cls-work" x="102" y="34.7" width="98" height="30.67" rx="4.2" onClick="setViewBox('190 40 1 1')" />
 			</g>
+
 			<g id="bottomright" class="menu-group">
-				<rect class="cls-1" x="102" y="69.3" width="98" height="30.67" rx="4.2" /></g
-			>
-			<g id="topleft" class={`menu-group ${activeSection.name === 'aboutus' && 'active'}`}>
-				<rect class="cls-1" width="115.8" height="30.67" rx="4.2" />
+				<rect class="cls-services" x="102" y="69.3" width="98" height="30.67" rx="4.2" onClick="setViewBox('180 80 1 1')"/>
 			</g>
-			<g id="topright" class="menu-group"
-				><rect class="cls-1" x="119.3" width="80.4" height="30.67" rx="4.2" /></g
-			>
+
+			<g id="topleft" class={`menu-group ${activeSection.name === 'aboutus' && 'active'}`}>
+				<rect class="cls-contact" width="115.8" height="30.67" rx="4.2" onClick="setViewBox('100 1 1 1')"/>
+			</g>
+
+			<g id="topright" class="menu-group">
+			<rect class="cls-recog" x="119.3" width="80.4" height="30.67" rx="4.2" onClick="setViewBox('180 1 1 1')"/>
+				</g>
 		</g>
 	</svg>
-	<!-- <div
-		class="content pink"
-		id="whatwedo"
-		style="--n: 0"
-		on:mousedown={(e) => handleChange(e, 0)}
-		on:touchstart={(e) => handleChange(e, 0)}
-	>
-		<div class="page-title"><h1>What we do.</h1></div>
-		<div class="content-box">
-			<h1>web design / ux / development.</h1>
-		</div>
-	</div> -->
-	<div
-		class="content green stack"
-		id="aboutus"
-		style="--n: 1"
-		on:mousedown={(e) => handleChange(e, 1)}
-		on:touchstart={(e) => handleChange(e, 1)}
-	>
-		<div class="page-title"><h1></h1></div>
-		<div class="content-box">
-			<p>
-				
-			</p>
-		</div>
-	</div>
-	<!-- <div
-		class="content grey stack"
-		id="work"
-		style="--n: 2"
-		on:mousedown={(e) => handleChange(e, 2)}
-		on:touchstart={(e) => handleChange(e, 2)}
-	>
-		<div class="page-title"><h1>Work.</h1></div>
-		<div class="content-box">
-			<p>Our Work</p>
-		</div>
-	</div>  -->
+	
+
 </div>
+
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;400;500;600;700;800;900&display=swap');
@@ -206,7 +203,7 @@
 		--color-green: #245941;
 		--color-light-green: #369c9b;
 		--color-pink: #d28797;
-		--current-theme-main: var(--color-pink);
+	
 		--current-theme-offset: var(--color-white);
 	}
 
@@ -264,43 +261,6 @@
 		top: 0;
 		left: 0;
 	}
-
-	/* .content.stack::before {
-		/* left: calc(3px + var(--n) * 2px);
-		top: calc(8px + var(--n) * 2px);
-		transform: rotate(calc(var(--n) * 2.5deg));
-		left: 8px;
-		transform: scaleY(calc(1 + var(--n) * 0.05)) rotate(calc(var(--n) * 1deg));
-	}
-	.content.pink::before {
-		background-color: var(--color-pink);
-	}
-
-	.content.green::before {
-		background-color: var(--color-green);
-	}
-
-	.content.grey::before {
-		background-color: var(--color-light-grey);
-	}
-
-	.content::before {
-		content: '';
-		width: 100%;
-		height: 110%;
-		border-radius: 0 0 20px 0;
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		/* transform-origin: bottom left;
-		transform: rotateZ(-5deg); 
-		-webkit-mask: url('/mask.svg');
-		mask: url('/mask.svg');
-		-webkit-mask-repeat: no-repeat;
-		-webkit-mask-size: 100% 100%;
-		mask-size: 100% 100%;
-		outline: black 2px solid;
-	} */
 
 	.content-box {
 		text-align: center;
