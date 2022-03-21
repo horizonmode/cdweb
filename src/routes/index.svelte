@@ -434,6 +434,12 @@
 	svg#logo2 {
 		display: none;
 	}
+	
+h1 {
+		transform: scale(0.7);
+		text-align: right;
+		right:-1rem !important;
+	}
 }
 
 @media only screen and (max-width: 376px) {
@@ -442,6 +448,25 @@
 		height: 100%;
 		width: auto;
 		transform: scale(1.2);
+	}
+	svg#logo2 {
+		display: none;
+	}
+
+h1 {
+		transform: scale(0.7);
+		text-align: right;
+		right:-1rem !important;
+	}
+
+}
+
+@media only screen and (max-width: 361px) {
+	svg#logo {
+		margin-top:140px;
+		height: 100%;
+		width: auto;
+		transform: scale(1.4);
 	}
 	svg#logo2 {
 		display: none;
