@@ -205,6 +205,9 @@
 		preserveAspectRatio="xMidYMid meet"
 	>
 		<defs>
+			<filter id="shadow">
+				<feDropShadow dx="0.3" dy="0.5" stdDeviation="0.3" />
+			</filter>
 			<style>
 				.brick {
 					fill: black;
@@ -240,6 +243,7 @@
 					width="98"
 					height="65.33"
 					rx="4.2"
+					style="{`${activeSection.name === 'work' && 'filter:url(#shadow)'}`};"
 					on:mousedown={(e) => setViewBox(e, 'work', '50,50,1,1')}
 					on:touchstart={(e) => setViewBox(e, 'work', '50,50,1,1')}
 					on:mouseover={() => setActiveSection('work')}
@@ -262,6 +266,7 @@
 					width="98"
 					height="30.67"
 					rx="4.2"
+					style="{`${activeSection.name === 'services' && 'filter:url(#shadow)'}`};"
 					on:mousedown={(e) => setViewBox(e, 'services', '100 33 28 28')}
 					on:touchstart={(e) => setViewBox(e, 'services', '100 33 28 28')}
 					on:mouseover={() => setActiveSection('services')}
@@ -284,6 +289,7 @@
 					width="98"
 					height="30.67"
 					rx="4.2"
+					style="{`${activeSection.name === 'recognition' && 'filter:url(#shadow)'}`};"
 					on:mousedown={(e) => setViewBox(e, 'recognition', '180 80 1 1')}
 					on:touchstart={(e) => setViewBox(e, 'recognition', '180 80 1 1')}
 					on:mouseover={() => setActiveSection('recognition')}
@@ -304,6 +310,7 @@
 					width="115.8"
 					height="30.67"
 					rx="4.2"
+					style="{`${activeSection.name === 'about' && 'filter:url(#shadow)'}`};"
 					on:mousedown={(e) => setViewBox(e, 'about', '100 1 1 1')}
 					on:touchstart={(e) => setViewBox(e, 'about', '100 1 1 1')}
 					on:mouseover={() => setActiveSection('about')}
@@ -325,6 +332,7 @@
 					width="80.4"
 					height="30.67"
 					rx="4.2"
+					style="{`${activeSection.name === 'contact' && 'filter:url(#shadow)'}`};"
 					on:mousedown={(e) => setViewBox(e, 'contact', '180 1 1 1')}
 					on:touchstart={(e) => setViewBox(e, 'contact', '180 1 1 1')}
 					on:mouseover={() => setActiveSection('contact')}
