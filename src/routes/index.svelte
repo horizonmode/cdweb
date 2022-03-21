@@ -339,12 +339,6 @@
 		overflow: hidden;
 	}
 
-	@media only screen and (max-width: 600px) {
-		:root {
-			font-size: 12px;
-		}
-	}
-
 	h1 {
 		white-space: pre-line;
 		font-weight: 800;
@@ -367,7 +361,6 @@
 		right: 1rem;
 		z-index: 10;
 		line-height: 4rem;
-		background-color: white;
 		color: black;
 		border-radius: 5px;
 	}
@@ -431,8 +424,36 @@
 		left: 0px;
 	}
 
-	
+	@media only screen and (max-width: 600px) {
+	svg#logo {
+		margin-top:170px;
+		height: 100%;
+		width: auto;
+		transform: scale(1.4);
+	}
+	svg#logo2 {
+		display: none;
+	}
+}
 
+@media only screen and (max-width: 376px) {
+	svg#logo {
+		margin-top:40px;
+		height: 100%;
+		width: auto;
+		transform: scale(1.2);
+	}
+	svg#logo2 {
+		display: none;
+	}
+
+h1 {
+		transform: scale(0.7);
+		text-align: right;
+		right:-1rem !important;
+	}
+
+}
 
 
 	svg * {
