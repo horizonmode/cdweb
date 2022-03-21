@@ -70,8 +70,8 @@
 
 		sectionIndex = nextSectionIndex;
 
-		// exitTimeline.play();
-		// playLogoAnimation();
+		exitTimeline.play();
+		playLogoAnimation();
 	};
 
 </script>
@@ -82,10 +82,10 @@
 	<h1 id="company-name">cotswold<br />cloud.</h1>
 
 	<svg
-		id="logo"
+		id="logo2"
 		xmlns="http://www.w3.org/2000/svg"
-		viewBox="75 10 50 75"
-		preserveAspectRatio="xMinYMin meet"
+		viewBox="75 10 75 75"
+		preserveAspectRatio="xMinYMin slice"
 	>
 
 <script type="text/JavaScript">
@@ -93,8 +93,7 @@
             <![CDATA[
 					function setViewBox(zoomValues){ 
 						var mySVG = document.getElementById('logo');
-						mySVG.setAttribute("viewBox", zoomValues);   
-						
+						mySVG.setAttribute("viewBox", zoomValues);  
 					}
  			]]>
 </script>
@@ -168,7 +167,7 @@
 		<g id="container" data-name="Layer 2" transform="rotate(-15, 100, 50)">
 
 			<g id="bottomleft" class={`menu-group ${activeSection.name === 'work' && 'active'}`}>
-				<rect class="cls-about" y="34.7" width="98" height="65.33" rx="4.2" onClick="setViewBox('50 50 1 1')"/>
+				<rect class="cls-about" y="34.7" width="98" height="65.33" rx="4.2" onClick="setViewBox('50 50 1 1')"></rect>
 			</g>
 
 			<g id="rightmid" class={`menu-group ${activeSection.name === 'whatwedo' && 'active'}`}>
@@ -188,6 +187,119 @@
 				</g>
 		</g>
 	</svg>
+
+	<svg
+		id="logo"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="75 10 75 75"
+		preserveAspectRatio="xMinYMin meet"
+	>
+
+<script type="text/JavaScript">
+
+            <![CDATA[
+					function setViewBox(zoomValues){ 
+						var mySVG = document.getElementById('logo');
+						mySVG.setAttribute("viewBox", zoomValues);  
+					}
+ 			]]>
+</script>
+
+		<defs>
+			<style>
+			.cls-about {
+					fill: black;
+					stroke: black;
+					stroke-width: 2;
+				}
+
+				.cls-about:hover {
+					fill: #245941;
+					stroke: #245941;
+				}
+
+				.cls-work {
+					fill: black;
+					stroke: black;
+					stroke-width: 2;
+					pointer-events: all;
+				}
+
+				.cls-work:hover {
+					fill: #d28797;
+					stroke: #d28797;
+				}
+
+				.cls-services {
+					fill: black;
+					stroke: black;
+					stroke-width: 2;
+					pointer-events: all;
+				}
+
+				.cls-services:hover {
+					fill: #484641;
+					stroke: #484641;
+				}
+
+				.cls-contact {
+					fill: black;
+					stroke: black;
+					stroke-width: 2;
+					pointer-events: all;
+				}
+
+				.cls-contact:hover {
+					fill: #979387;
+					stroke: #979387;
+				}
+
+				.cls-recog {
+					stroke: black;
+					stroke-width: 2;
+					font-size: 4px;
+					font-weight: 400;
+					fill: black;
+				}
+
+				.cls-recog:hover {
+					fill: #369c6b;
+					stroke: #369c6b;
+				}
+				
+			</style>
+		</defs>
+
+
+		<g id="container" data-name="Layer 2" transform="rotate(-15, 100, 50)">
+
+			<g id="bottomleft" class={`menu-group ${activeSection.name === 'work' && 'active'}`}>
+				<rect class="cls-about" y="34.7" width="98" height="65.33" rx="4.2" onClick="setViewBox('50 50 1 1')"></rect>
+				<text x="84" y="40" font-size="4" fill="white">work</text>
+			
+			</g>
+
+			<g id="rightmid" class={`menu-group ${activeSection.name === 'whatwedo' && 'active'}`}>
+				<rect class="cls-work" x="102" y="34.7" width="98" height="30.67" rx="4.2" onClick="setViewBox('190 40 1 1')"></rect>
+				<text x="105" y="40" font-size="4" fill="white">services</text>
+			</g>
+
+			<g id="bottomright" class="menu-group">
+				<rect class="cls-services" x="102" y="69.3" width="98" height="30.67" rx="4.2" onClick="setViewBox('180 80 1 1')"></rect>
+				<text x="105" y="75" font-size="4" fill="white">recognition</text>
+			</g>
+
+			<g id="topleft" class={`menu-group ${activeSection.name === 'aboutus' && 'active'}`}>
+				<rect class="cls-contact" width="115.8" height="30.67" rx="4.2" onClick="setViewBox('100 1 1 1')"></rect>
+				<text x="99" y="29" font-size="4" fill="white">about</text>
+			</g>
+
+			<g id="topright" class="menu-group">
+			<rect class="cls-recog" x="119.3" width="80.4" height="30.67" rx="4.2" onClick="setViewBox('180 1 1 1')"></rect>
+			<text x="122" y="29" font-size="4" fill="white">contact</text>
+				</g>
+		</g>
+	</svg>
 	
 
 </div>
@@ -195,6 +307,21 @@
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;400;500;600;700;800;900&display=swap');
+
+	#bottomleft text {display: none;}
+	#bottomleft:hover text {display: block;}
+
+	#rightmid text {display: none;}
+	#rightmid:hover text {display: block;}
+
+	#bottomright text {display: none;}
+	#bottomright:hover text {display: block;}
+
+	#topleft text {display: none;}
+	#topleft:hover text {display: block;}
+
+	#topright text {display: none;}
+	#topright:hover text {display: block;}
 
 	:root {
 		--color-grey: #979387;
@@ -288,10 +415,25 @@
 		}
 	}
 
+	
+
 	svg#logo {
 		height: 100%;
 		width: auto;
 	}
+
+	svg#logo2 {
+		height: 100px;
+		width: 100px;
+		margin-top:50px;
+		margin-left:50px;
+		position: absolute;
+		left: 0px;
+	}
+
+	
+
+
 
 	svg * {
 		transition: fill 0.5s ease-in-out, stroke 0.5s ease-in-out;
