@@ -1,14 +1,20 @@
 <script>
-
 	import gsap from 'gsap';
+	import { onMount } from 'svelte';
 
 	const sections = [
-		{ name: 'whatwedo', color: 'var(--color-pink)' },
-		{ name: 'aboutus', color: 'var(--color-green)' },
-		{ name: 'work', color: 'var(--color-light-grey)' }
+		{ name: 'about', color: 'var(--color-light-grey)' },
+		{ name: 'contact', color: 'var(--color-light-green)' },
+		{ name: 'work', color: 'var(--color-green)' },
+		{ name: 'services', color: 'var(--color-pink)' },
+		{ name: 'recognition', color: 'var(--color-grey)' }
 	];
-	let sectionIndex = 0;
+
+	let sectionIndex = -1;
 	$: activeSection = sections[sectionIndex] || { name: '', color: '' };
+	let zoomed = false;
+
+	let mostRecentZoom;
 
 	const wallBuildTopLeft = [
 		{ transform: 'translate3D(-50%, -50%, 0)' },
@@ -67,124 +73,86 @@
 		animations.push(
 			document.getElementById('rightmid').animate(wallBuildMidRight, wallBuildTiming)
 		);
-
-		sectionIndex = nextSectionIndex;
-
-		exitTimeline.play();
-		playLogoAnimation();
 	};
 
+	const setViewBox = (e, zoomValues) => {
+		e.preventDefault();
+		// create timeline
+
+		if (zoomed) {
+			// zoom out
+			zoomed = false;
+			mostRecentZoom.reverse();
+		} else {
+			// zoom in
+			zoomed = true;
+			const tl = gsap.timeline({ repeat: 0 });
+			tl.add('start');
+			tl.to('#logo', { attr: { viewBox: zoomValues }, duration: 1 }, 'start');
+			tl.to('#container', { transform: 'rotate(0,100,50)', duration: 1 }, 'start');
+			tl.play();
+			mostRecentZoom = tl;
+		}
+	};
+
+	const setActiveSection = (sectionName) => {
+		console.log(sectionName);
+		const index = sections.findIndex((s) => s.name === sectionName);
+		sectionIndex = index;
+		document.documentElement.style.setProperty('--current-theme', sections[sectionIndex].color);
+	};
+
+	// when page loads
+	onMount(async () => {
+		playLogoAnimation();
+	});
 </script>
 
-
 <div class="wrapper">
-
 	<h1 id="company-name">cotswold<br />cloud.</h1>
 
 	<svg
 		id="logo2"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="75 10 75 75"
-		preserveAspectRatio="xMinYMin slice"
+		preserveAspectRatio="xMidYMid meet"
 	>
-
-<script type="text/JavaScript">
-
-            <![CDATA[
-					function setViewBox(zoomValues){ 
-						var mySVG = document.getElementById('logo');
-						mySVG.setAttribute("viewBox", zoomValues);  
-					}
- 			]]>
-</script>
-
 		<defs>
 			<style>
-			.cls-about {
+				.brick {
 					fill: black;
 					stroke: black;
 					stroke-width: 2;
 				}
 
-				.cls-about:hover {
-					fill: #245941;
-					stroke: #245941;
-				}
-
-				.cls-work {
-					fill: black;
-					stroke: black;
-					stroke-width: 2;
+				.active .brick {
+					fill: var(--current-theme);
+					stroke: var(--current-theme);
 					pointer-events: all;
 				}
-
-				.cls-work:hover {
-					fill: #d28797;
-					stroke: #d28797;
-				}
-
-				.cls-services {
-					fill: black;
-					stroke: black;
-					stroke-width: 2;
-					pointer-events: all;
-				}
-
-				.cls-services:hover {
-					fill: #484641;
-					stroke: #484641;
-				}
-
-				.cls-contact {
-					fill: black;
-					stroke: black;
-					stroke-width: 2;
-					pointer-events: all;
-				}
-
-				.cls-contact:hover {
-					fill: #979387;
-					stroke: #979387;
-				}
-
-				.cls-recog {
-					stroke: black;
-					stroke-width: 2;
-					font-size: 4px;
-					font-weight: 400;
-					fill: black;
-				}
-
-				.cls-recog:hover {
-					fill: #369c6b;
-					stroke: #369c6b;
-				}
-				
 			</style>
 		</defs>
 
-
-		<g id="container" data-name="Layer 2" transform="rotate(-15, 100, 50)">
-
-			<g id="bottomleft" class={`menu-group ${activeSection.name === 'work' && 'active'}`}>
-				<rect class="cls-about" y="34.7" width="98" height="65.33" rx="4.2" onClick="setViewBox('50 50 1 1')"></rect>
+		<g data-name="Layer 2" transform="rotate(-15, 100, 50)">
+			<g class={`menu-group ${activeSection.name === 'work' && 'active'}`}>
+				<rect class="brick" y="34.7" width="98" height="65.33" rx="4.2" />
 			</g>
 
-			<g id="rightmid" class={`menu-group ${activeSection.name === 'whatwedo' && 'active'}`}>
-				<rect class="cls-work" x="102" y="34.7" width="98" height="30.67" rx="4.2" onClick="setViewBox('190 40 1 1')" />
+			<g class={`menu-group ${activeSection.name === 'whatwedo' && 'active'}`}>
+				<rect class="brick" x="102" y="34.7" width="98" height="30.67" rx="4.2" />
 			</g>
 
-			<g id="bottomright" class="menu-group">
-				<rect class="cls-services" x="102" y="69.3" width="98" height="30.67" rx="4.2" onClick="setViewBox('180 80 1 1')"/>
+			<g class="menu-group">
+				<rect class="brick" x="102" y="69.3" width="98" height="30.67" rx="4.2" />
 			</g>
 
-			<g id="topleft" class={`menu-group ${activeSection.name === 'aboutus' && 'active'}`}>
-				<rect class="cls-contact" width="115.8" height="30.67" rx="4.2" onClick="setViewBox('100 1 1 1')"/>
+			<g class={`menu-group ${activeSection.name === 'aboutus' && 'active'}`}>
+				<rect class="brick" width="115.8" height="30.67" rx="4.2" />
 			</g>
 
-			<g id="topright" class="menu-group">
-			<rect class="cls-recog" x="119.3" width="80.4" height="30.67" rx="4.2" onClick="setViewBox('180 1 1 1')"/>
-				</g>
+			<g class="menu-group">
+				<rect class="brick" x="119.3" width="80.4" height="30.67" rx="4.2" />
+			</g>
 		</g>
 	</svg>
 
@@ -192,145 +160,124 @@
 		id="logo"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="75 10 75 75"
-		preserveAspectRatio="xMinYMin meet"
+		preserveAspectRatio="xMidYMid meet"
 	>
-
-<script type="text/JavaScript">
-
-            <![CDATA[
-					function setViewBox(zoomValues){ 
-						var mySVG = document.getElementById('logo');
-						mySVG.setAttribute("viewBox", zoomValues);  
-					}
- 			]]>
-</script>
-
 		<defs>
 			<style>
-			.cls-about {
+				.brick {
 					fill: black;
 					stroke: black;
 					stroke-width: 2;
 				}
 
-				.cls-about:hover {
-					fill: #245941;
-					stroke: #245941;
+				text {
+					display: none;
+					pointer-events: none;
 				}
 
-				.cls-work {
-					fill: black;
-					stroke: black;
-					stroke-width: 2;
-					pointer-events: all;
+				.active .brick {
+					fill: var(--current-theme);
+					stroke: var(--current-theme);
 				}
 
-				.cls-work:hover {
-					fill: #d28797;
-					stroke: #d28797;
+				.active text {
+					display: block;
 				}
-
-				.cls-services {
-					fill: black;
-					stroke: black;
-					stroke-width: 2;
-					pointer-events: all;
-				}
-
-				.cls-services:hover {
-					fill: #484641;
-					stroke: #484641;
-				}
-
-				.cls-contact {
-					fill: black;
-					stroke: black;
-					stroke-width: 2;
-					pointer-events: all;
-				}
-
-				.cls-contact:hover {
-					fill: #979387;
-					stroke: #979387;
-				}
-
-				.cls-recog {
-					stroke: black;
-					stroke-width: 2;
-					font-size: 4px;
-					font-weight: 400;
-					fill: black;
-				}
-
-				.cls-recog:hover {
-					fill: #369c6b;
-					stroke: #369c6b;
-				}
-				
 			</style>
 		</defs>
 
-
 		<g id="container" data-name="Layer 2" transform="rotate(-15, 100, 50)">
-
 			<g id="bottomleft" class={`menu-group ${activeSection.name === 'work' && 'active'}`}>
-				<rect class="cls-about" y="34.7" width="98" height="65.33" rx="4.2" onClick="setViewBox('50 50 1 1')"></rect>
+				<rect
+					class="brick"
+					y="34.7"
+					width="98"
+					height="65.33"
+					rx="4.2"
+					on:mousedown={(e) => setViewBox(e, '50,50,1,1')}
+					on:touchstart={(e) => setViewBox(e, '50,50,1,1')}
+					on:mouseover={() => setActiveSection('work')}
+					on:focus={() => setActiveSection('work')}
+				/>
 				<text x="84" y="40" font-size="4" fill="white">work</text>
-			
 			</g>
 
-			<g id="rightmid" class={`menu-group ${activeSection.name === 'whatwedo' && 'active'}`}>
-				<rect class="cls-work" x="102" y="34.7" width="98" height="30.67" rx="4.2" onClick="setViewBox('190 40 1 1')"></rect>
+			<g id="rightmid" class={`menu-group ${activeSection.name === 'services' && 'active'}`}>
+				<rect
+					class="brick"
+					x="102"
+					y="34.7"
+					width="98"
+					height="30.67"
+					rx="4.2"
+					on:mousedown={(e) => setViewBox(e, '190 40 1 1')}
+					on:touchstart={(e) => setViewBox(e, '190 40 1 1')}
+					on:mouseover={() => setActiveSection('services')}
+					on:focus={() => setActiveSection('services')}
+				/>
 				<text x="105" y="40" font-size="4" fill="white">services</text>
 			</g>
 
-			<g id="bottomright" class="menu-group">
-				<rect class="cls-services" x="102" y="69.3" width="98" height="30.67" rx="4.2" onClick="setViewBox('180 80 1 1')"></rect>
+			<g id="bottomright" class={`menu-group ${activeSection.name === 'recognition' && 'active'}`}>
+				<rect
+					class="brick"
+					x="102"
+					y="69.3"
+					width="98"
+					height="30.67"
+					rx="4.2"
+					on:mousedown={(e) => setViewBox(e, '180 80 1 1')}
+					on:touchstart={(e) => setViewBox(e, '180 80 1 1')}
+					on:mouseover={() => setActiveSection('recognition')}
+					on:focus={() => setActiveSection('recognition')}
+				/>
 				<text x="105" y="75" font-size="4" fill="white">recognition</text>
 			</g>
 
-			<g id="topleft" class={`menu-group ${activeSection.name === 'aboutus' && 'active'}`}>
-				<rect class="cls-contact" width="115.8" height="30.67" rx="4.2" onClick="setViewBox('100 1 1 1')"></rect>
+			<g id="topleft" class={`menu-group ${activeSection.name === 'about' && 'active'}`}>
+				<rect
+					class="brick"
+					width="115.8"
+					height="30.67"
+					rx="4.2"
+					on:mousedown={(e) => setViewBox(e, '100 1 1 1')}
+					on:touchstart={(e) => setViewBox(e, '100 1 1 1')}
+					on:mouseover={() => setActiveSection('about')}
+					on:focus={() => setActiveSection('about')}
+				/>
 				<text x="99" y="29" font-size="4" fill="white">about</text>
 			</g>
 
-			<g id="topright" class="menu-group">
-			<rect class="cls-recog" x="119.3" width="80.4" height="30.67" rx="4.2" onClick="setViewBox('180 1 1 1')"></rect>
-			<text x="122" y="29" font-size="4" fill="white">contact</text>
-				</g>
+			<g id="topright" class={`menu-group ${activeSection.name === 'contact' && 'active'}`}>
+				<rect
+					class="brick"
+					x="119.3"
+					width="80.4"
+					height="30.67"
+					rx="4.2"
+					on:mousedown={(e) => setViewBox(e, '180 1 1 1')}
+					on:touchstart={(e) => setViewBox(e, '180 1 1 1')}
+					on:mouseover={() => setActiveSection('contact')}
+					on:focus={() => setActiveSection('contact')}
+				/>
+				<text x="122" y="29" font-size="4" fill="white">contact</text>
+			</g>
 		</g>
 	</svg>
-	
-
 </div>
-
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;400;500;600;700;800;900&display=swap');
-
-	#bottomleft text {display: none;}
-	#bottomleft:hover text {display: block;}
-
-	#rightmid text {display: none;}
-	#rightmid:hover text {display: block;}
-
-	#bottomright text {display: none;}
-	#bottomright:hover text {display: block;}
-
-	#topleft text {display: none;}
-	#topleft:hover text {display: block;}
-
-	#topright text {display: none;}
-	#topright:hover text {display: block;}
 
 	:root {
 		--color-grey: #979387;
 		--color-light-grey: #d5d4cc;
 		--color-dark-grey: #484641;
 		--color-green: #245941;
-		--color-light-green: #369c9b;
+		--color-light-green: #369c6b;
 		--color-pink: #d28797;
-	
+
+		--current-theme: var(--color-grey);
 		--current-theme-offset: var(--color-white);
 	}
 
@@ -351,8 +298,8 @@
 		width: 100vw;
 		height: 100vh;
 		display: flex;
-		justify-content: center; 
-
+		justify-content: center;
+		align-items: center;
 	}
 
 	.wrapper #company-name {
@@ -389,7 +336,7 @@
 		top: 50%;
 		transform: translate(-50%, -50%);
 		font-family: 'Spartan', sans-serif;
-		transition: opacity 2s;
+		transition: opacity 1s;
 		color: white;
 	}
 
@@ -408,80 +355,81 @@
 		}
 	}
 
-	
-
 	svg#logo {
 		height: 100%;
 		width: auto;
+	}
+
+	@media only screen and (max-width: 600px) {
+		svg#logo {
+			height: 50%;
+			width: auto;
+		}
 	}
 
 	svg#logo2 {
 		height: 100px;
 		width: 100px;
-		margin-top:50px;
-		margin-left:50px;
+		top: 1rem;
+		left: 1rem;
 		position: absolute;
-		left: 0px;
 	}
 
 	@media only screen and (max-width: 600px) {
-	svg#logo {
-		margin-top:170px;
-		height: 100%;
-		width: auto;
-		transform: scale(1.4);
-	}
-	svg#logo2 {
-		display: none;
-	}
-	
-h1 {
-		transform: scale(0.7);
-		text-align: right;
-		right:-1rem !important;
-	}
-}
+		svg#logo {
+			margin-top: 170px;
+			height: 100%;
+			width: auto;
+			transform: scale(1.4);
+		}
+		svg#logo2 {
+			display: none;
+		}
 
-@media only screen and (max-width: 376px) {
-	svg#logo {
-		margin-top:40px;
-		height: 100%;
-		width: auto;
-		transform: scale(1.2);
-	}
-	svg#logo2 {
-		display: none;
+		h1 {
+			transform: scale(0.7);
+			text-align: right;
+			right: -1rem !important;
+		}
 	}
 
-h1 {
-		transform: scale(0.7);
-		text-align: right;
-		right:-1rem !important;
+	@media only screen and (max-width: 376px) {
+		svg#logo {
+			margin-top: 40px;
+			height: 100%;
+			width: auto;
+			transform: scale(1.2);
+		}
+		svg#logo2 {
+			display: none;
+		}
+
+		h1 {
+			transform: scale(0.7);
+			text-align: right;
+			right: -1rem !important;
+		}
 	}
 
-}
+	@media only screen and (max-width: 361px) {
+		svg#logo {
+			margin-top: 140px;
+			height: 100%;
+			width: auto;
+			transform: scale(1.4);
+		}
+		svg#logo2 {
+			display: none;
+		}
 
-@media only screen and (max-width: 361px) {
-	svg#logo {
-		margin-top:140px;
-		height: 100%;
-		width: auto;
-		transform: scale(1.4);
+		h1 {
+			transform: scale(0.7);
+			text-align: right;
+			right: -1rem !important;
+		}
 	}
-	svg#logo2 {
-		display: none;
-	}
-
-h1 {
-		transform: scale(0.7);
-		text-align: right;
-		right:-1rem !important;
-	}
-
-}
-
 
 	svg * {
-		transition: fill 0.5s ease-in-out, stroke 0.5s ease-in-out;
+		transition: fill 0.2s ease-in-out, stroke 0.2s ease-in-out;
 	}
 </style>
