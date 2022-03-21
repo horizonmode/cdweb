@@ -13,8 +13,7 @@
 	let sectionIndex = -1;
 	$: activeSection = sections[sectionIndex] || { name: '', color: '' };
 	let zoomed = false;
-
-	let mostRecentZoom;
+	let transitioning = false;
 
 	const wallBuildTopLeft = [
 		{ transform: 'translate3D(-50%, -50%, 0)' },
@@ -75,28 +74,71 @@
 		);
 	};
 
-	const setViewBox = (e, zoomValues) => {
+	const setViewBox = (e, sectionName, zoomValues) => {
 		e.preventDefault();
+
+		// set active section if not already
+		setActiveSection(sectionName);
 		// create timeline
 
 		if (zoomed) {
 			// zoom out
 			zoomed = false;
-			mostRecentZoom.reverse();
+			const mql = window.matchMedia('screen and (max-width: 600px)');
+			const tl = gsap.timeline({ repeat: 0 });
+			transitioning = true;
+			tl.add('start');
+			tl.to(
+				'#logo',
+				{ attr: { viewBox: '75 10 75 75', preserveAspectRatio: 'xMidYMid slice' }, duration: 1 },
+				'start'
+			);
+			tl.to(
+				'#logo',
+				{
+					width: 'auto',
+					height: mql.matches ? '50%' : '100%',
+					duration: 1
+				},
+				'start'
+			);
+			tl.to('#container', { attr: { transform: 'rotate(-15,100,50)' }, duration: 1 }, 'start');
+			tl.eventCallback('onComplete', () => {
+				transitioning = false;
+			});
+			tl.play();
 		} else {
 			// zoom in
-			zoomed = true;
+			transitioning = true;
 			const tl = gsap.timeline({ repeat: 0 });
 			tl.add('start');
-			tl.to('#logo', { attr: { viewBox: zoomValues }, duration: 1 }, 'start');
-			tl.to('#container', { transform: 'rotate(0,100,50)', duration: 1 }, 'start');
+			tl.to(
+				'#logo',
+				{
+					attr: { viewBox: zoomValues, preserveAspectRatio: 'xMinYMin slice' },
+					duration: 1
+				},
+				'start'
+			);
+			tl.to(
+				'#logo',
+				{
+					width: '100%',
+					height: '100%',
+					duration: 1
+				},
+				'start'
+			);
+			tl.to('#container', { attr: { transform: 'rotate(0,100,50)' }, duration: 1 }, 'start');
+			tl.eventCallback('onComplete', () => {
+				zoomed = true;
+				transitioning = false;
+			});
 			tl.play();
-			mostRecentZoom = tl;
 		}
 	};
 
 	const setActiveSection = (sectionName) => {
-		console.log(sectionName);
 		const index = sections.findIndex((s) => s.name === sectionName);
 		sectionIndex = index;
 		document.documentElement.style.setProperty('--current-theme', sections[sectionIndex].color);
@@ -115,7 +157,7 @@
 		id="logo2"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="75 10 75 75"
-		preserveAspectRatio="xMidYMid meet"
+		preserveAspectRatio="xMidYMid slice"
 	>
 		<defs>
 			<style>
@@ -138,19 +180,19 @@
 				<rect class="brick" y="34.7" width="98" height="65.33" rx="4.2" />
 			</g>
 
-			<g class={`menu-group ${activeSection.name === 'whatwedo' && 'active'}`}>
+			<g class={`menu-group ${activeSection.name === 'services' && 'active'}`}>
 				<rect class="brick" x="102" y="34.7" width="98" height="30.67" rx="4.2" />
 			</g>
 
-			<g class="menu-group">
+			<g class={`menu-group ${activeSection.name === 'recognition' && 'active'}`}>
 				<rect class="brick" x="102" y="69.3" width="98" height="30.67" rx="4.2" />
 			</g>
 
-			<g class={`menu-group ${activeSection.name === 'aboutus' && 'active'}`}>
+			<g class={`menu-group ${activeSection.name === 'about' && 'active'}`}>
 				<rect class="brick" width="115.8" height="30.67" rx="4.2" />
 			</g>
 
-			<g class="menu-group">
+			<g class={`menu-group ${activeSection.name === 'contact' && 'active'}`}>
 				<rect class="brick" x="119.3" width="80.4" height="30.67" rx="4.2" />
 			</g>
 		</g>
@@ -183,6 +225,10 @@
 				.active text {
 					display: block;
 				}
+
+				.active text.hide {
+					display: none;
+				}
 			</style>
 		</defs>
 
@@ -194,12 +240,18 @@
 					width="98"
 					height="65.33"
 					rx="4.2"
-					on:mousedown={(e) => setViewBox(e, '50,50,1,1')}
-					on:touchstart={(e) => setViewBox(e, '50,50,1,1')}
+					on:mousedown={(e) => setViewBox(e, 'work', '50,50,1,1')}
+					on:touchstart={(e) => setViewBox(e, 'work', '50,50,1,1')}
 					on:mouseover={() => setActiveSection('work')}
 					on:focus={() => setActiveSection('work')}
 				/>
-				<text x="84" y="40" font-size="4" fill="white">work</text>
+				<text
+					class={`${transitioning || (zoomed && 'hide')}`}
+					x="84"
+					y="40"
+					font-size="4"
+					fill="white">work</text
+				>
 			</g>
 
 			<g id="rightmid" class={`menu-group ${activeSection.name === 'services' && 'active'}`}>
@@ -210,12 +262,18 @@
 					width="98"
 					height="30.67"
 					rx="4.2"
-					on:mousedown={(e) => setViewBox(e, '190 40 1 1')}
-					on:touchstart={(e) => setViewBox(e, '190 40 1 1')}
+					on:mousedown={(e) => setViewBox(e, 'services', '100 33 28 28')}
+					on:touchstart={(e) => setViewBox(e, 'services', '100 33 28 28')}
 					on:mouseover={() => setActiveSection('services')}
 					on:focus={() => setActiveSection('services')}
 				/>
-				<text x="105" y="40" font-size="4" fill="white">services</text>
+				<text
+					class={`${(transitioning || zoomed) && 'hide'}`}
+					x="105"
+					y="40"
+					font-size="4"
+					fill="white">services</text
+				>
 			</g>
 
 			<g id="bottomright" class={`menu-group ${activeSection.name === 'recognition' && 'active'}`}>
@@ -226,12 +284,18 @@
 					width="98"
 					height="30.67"
 					rx="4.2"
-					on:mousedown={(e) => setViewBox(e, '180 80 1 1')}
-					on:touchstart={(e) => setViewBox(e, '180 80 1 1')}
+					on:mousedown={(e) => setViewBox(e, 'recognition', '180 80 1 1')}
+					on:touchstart={(e) => setViewBox(e, 'recognition', '180 80 1 1')}
 					on:mouseover={() => setActiveSection('recognition')}
 					on:focus={() => setActiveSection('recognition')}
 				/>
-				<text x="105" y="75" font-size="4" fill="white">recognition</text>
+				<text
+					class={`${(transitioning || zoomed) && 'hide'}`}
+					x="105"
+					y="75"
+					font-size="4"
+					fill="white">recognition</text
+				>
 			</g>
 
 			<g id="topleft" class={`menu-group ${activeSection.name === 'about' && 'active'}`}>
@@ -240,12 +304,18 @@
 					width="115.8"
 					height="30.67"
 					rx="4.2"
-					on:mousedown={(e) => setViewBox(e, '100 1 1 1')}
-					on:touchstart={(e) => setViewBox(e, '100 1 1 1')}
+					on:mousedown={(e) => setViewBox(e, 'about', '100 1 1 1')}
+					on:touchstart={(e) => setViewBox(e, 'about', '100 1 1 1')}
 					on:mouseover={() => setActiveSection('about')}
 					on:focus={() => setActiveSection('about')}
 				/>
-				<text x="99" y="29" font-size="4" fill="white">about</text>
+				<text
+					class={`${(transitioning || zoomed) && 'hide'}`}
+					x="99"
+					y="29"
+					font-size="4"
+					fill="white">about</text
+				>
 			</g>
 
 			<g id="topright" class={`menu-group ${activeSection.name === 'contact' && 'active'}`}>
@@ -255,15 +325,24 @@
 					width="80.4"
 					height="30.67"
 					rx="4.2"
-					on:mousedown={(e) => setViewBox(e, '180 1 1 1')}
-					on:touchstart={(e) => setViewBox(e, '180 1 1 1')}
+					on:mousedown={(e) => setViewBox(e, 'contact', '180 1 1 1')}
+					on:touchstart={(e) => setViewBox(e, 'contact', '180 1 1 1')}
 					on:mouseover={() => setActiveSection('contact')}
 					on:focus={() => setActiveSection('contact')}
 				/>
-				<text x="122" y="29" font-size="4" fill="white">contact</text>
+				<text
+					class={`${(transitioning || zoomed) && 'hide'}`}
+					x="122"
+					y="29"
+					font-size="4"
+					fill="white">contact</text
+				>
 			</g>
 		</g>
 	</svg>
+	<div class={`content ${activeSection.name === 'services' && zoomed && 'active'}`}>
+		<div class="content-box"><h1>web design. ux. development.</h1></div>
+	</div>
 </div>
 
 <style>
@@ -327,6 +406,12 @@
 		z-index: calc(3 - var(--n));
 		top: 0;
 		left: 0;
+		display: none;
+		pointer-events: none;
+	}
+
+	.content.active {
+		display: block;
 	}
 
 	.content-box {
@@ -341,7 +426,7 @@
 	}
 
 	.page-title {
-		display: none;
+		display: block;
 	}
 
 	@media only screen and (min-width: 600px) {
@@ -358,6 +443,11 @@
 	svg#logo {
 		height: 100%;
 		width: auto;
+	}
+
+	svg#logo.fullscreen {
+		width: 100%;
+		height: 100%;
 	}
 
 	@media only screen and (max-width: 600px) {
@@ -377,10 +467,8 @@
 
 	@media only screen and (max-width: 600px) {
 		svg#logo {
-			margin-top: 170px;
-			height: 100%;
+			height: 50%;
 			width: auto;
-			transform: scale(1.4);
 		}
 		svg#logo2 {
 			display: none;
@@ -395,10 +483,10 @@
 
 	@media only screen and (max-width: 376px) {
 		svg#logo {
-			margin-top: 40px;
+			/* margin-top: 40px;
 			height: 100%;
 			width: auto;
-			transform: scale(1.2);
+			transform: scale(1.2); */
 		}
 		svg#logo2 {
 			display: none;
@@ -413,10 +501,10 @@
 
 	@media only screen and (max-width: 361px) {
 		svg#logo {
-			margin-top: 140px;
+			/* margin-top: 140px;
 			height: 100%;
 			width: auto;
-			transform: scale(1.4);
+			transform: scale(1.4); */
 		}
 		svg#logo2 {
 			display: none;
