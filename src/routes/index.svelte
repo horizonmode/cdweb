@@ -315,8 +315,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'about' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'about', '87 -1 30 30', 'xMaxYMax slice')}
-					on:touchstart={(e) => setViewBox(e, 'about', '87 -1 30 30', 'xMaxYMax slice')}
+					on:mousedown={(e) => setViewBox(e, 'about', '89 -1.1 28 28', 'xMaxYMin slice')}
+					on:touchstart={(e) => setViewBox(e, 'about', '89 -1.1 28 28', 'xMaxYMin slice')}
 					on:mouseover={() => setActiveSection('about')}
 					on:focus={() => setActiveSection('about')}
 				/>
