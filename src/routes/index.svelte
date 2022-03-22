@@ -93,7 +93,7 @@
 				{
 					attr: {
 						viewBox: '75 10 75 75',
-						preserveAspectRatio: aspectRatioValues || 'xMidYMid slice'
+						preserveAspectRatio: 'xMidYMid slice'
 					},
 					duration: 1
 				},
