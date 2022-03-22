@@ -315,8 +315,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'about' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'about', '85 0 32 32', 'xMaxYMax slice')}
-					on:touchstart={(e) => setViewBox(e, 'about', '85 0 32 32', 'xMaxYMax slice')}
+					on:mousedown={(e) => setViewBox(e, 'about', '87 -1 30 30', 'xMaxYMax slice')}
+					on:touchstart={(e) => setViewBox(e, 'about', '87 -1 30 30', 'xMaxYMax slice')}
 					on:mouseover={() => setActiveSection('about')}
 					on:focus={() => setActiveSection('about')}
 				/>
@@ -337,8 +337,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'contact' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'contact', '118.2 8.8 23 23', 'xMinYMax slice')}
-					on:touchstart={(e) => setViewBox(e, 'contact', '118.2 8.8 23 23', 'xMinYMax slice')}
+					on:mousedown={(e) => setViewBox(e, 'contact', '118.2 4 28 28', 'xMinYMax slice')}
+					on:touchstart={(e) => setViewBox(e, 'contact', '118.2 4 28 28', 'xMinYMax slice')}
 					on:mouseover={() => setActiveSection('contact')}
 					on:focus={() => setActiveSection('contact')}
 				/>
@@ -443,17 +443,7 @@
 		display: block;
 	}
 
-	@media only screen and (min-width: 600px) {
-		.page-title {
-			position: absolute;
-			right: 12rem;
-			top: 1rem;
-			color: white;
-			text-decoration: underline;
-			display: block;
-		}
-	}
-
+	
 	svg#logo {
 		height: 600px;
 		width: 600px;
@@ -465,12 +455,24 @@
 	}
 
 	svg#logo2 {
-		height: 100px;
-		width: 100px;
+		height: 120px;
+		width: 120px;
 		top: 2rem;
 		left: 2rem;
 		position: absolute;
 	}
+
+	@media only screen and (min-width: 600px) {
+		.page-title {
+			position: absolute;
+			right: 12rem;
+			top: 1rem;
+			color: white;
+			text-decoration: underline;
+			display: block;
+		}
+	}
+
 
 	@media only screen and (max-width: 600px) {
 		svg#logo {
@@ -478,57 +480,25 @@
 			height: 50%;
 			width: auto;
 		}
+
 		svg#logo2 {
 			display: none;
+		}
+
+		h1 {
+			transform: scale(0.7);
 		}
 
 		h1#company-name {
-			transform: scale(0.5);
+			transform: scale(0.5) !important;
 			text-align: right;
-			right: -2.5rem !important;
-		}
-
-		h1 {
-			transform: scale(0.7);
+			right: -2rem !important;
+			bottom: 0rem !important;
 		}
 
 		
-	}
 
-	@media only screen and (max-width: 376px) {
-		svg#logo {
-			/* margin-top: 40px;
-			height: 100%;
-			width: auto;
-			transform: scale(1.2); */
-		}
-		svg#logo2 {
-			display: none;
-		}
-
-		h1 {
-			transform: scale(0.7);
-			text-align: right;
-			right: -1rem !important;
-		}
-	}
-
-	@media only screen and (max-width: 361px) {
-		svg#logo {
-			/* margin-top: 140px;
-			height: 100%;
-			width: auto;
-			transform: scale(1.4); */
-		}
-		svg#logo2 {
-			display: none;
-		}
-
-		h1 {
-			transform: scale(0.7);
-			text-align: right;
-			right: -1rem !important;
-		}
+		
 	}
 
 	svg * {
