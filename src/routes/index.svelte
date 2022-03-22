@@ -155,7 +155,7 @@
 </script>
 
 <div class="wrapper">
-	<h1 id="company-name">cotswold<br />cloud.</h1>
+	<h1 id="company-name">cotswold<br />cloud</h1>
 
 	<svg
 		id="logo2"
@@ -294,8 +294,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'recognition' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'recognition', '100.8 73.2 13 110')}
-					on:touchstart={(e) => setViewBox(e, 'recognition', '100.8 73.2 13 110')}
+					on:mousedown={(e) => setViewBox(e, 'recognition', '100.9 68.2 23 23')}
+					on:touchstart={(e) => setViewBox(e, 'recognition', '100.9 68.2 23 23')}
 					on:mouseover={() => setActiveSection('recognition')}
 					on:focus={() => setActiveSection('recognition')}
 				/>
@@ -315,8 +315,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'about' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'about', '85 0 30 32', 'xMaxYMax slice')}
-					on:touchstart={(e) => setViewBox(e, 'about', '85 0 30 32', 'xMaxYMax slice')}
+					on:mousedown={(e) => setViewBox(e, 'about', '85 0 32 32', 'xMaxYMax slice')}
+					on:touchstart={(e) => setViewBox(e, 'about', '85 0 32 32', 'xMaxYMax slice')}
 					on:mouseover={() => setActiveSection('about')}
 					on:focus={() => setActiveSection('about')}
 				/>
@@ -337,8 +337,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'contact' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'contact', '118.2 9 23 23')}
-					on:touchstart={(e) => setViewBox(e, 'contact', '118.2 9 23 23')}
+					on:mousedown={(e) => setViewBox(e, 'contact', '118.2 8.8 23 23', 'xMinYMax slice')}
+					on:touchstart={(e) => setViewBox(e, 'contact', '118.2 8.8 23 23', 'xMinYMax slice')}
 					on:mouseover={() => setActiveSection('contact')}
 					on:focus={() => setActiveSection('contact')}
 				/>
@@ -353,7 +353,7 @@
 		</g>
 	</svg>
 	<div class={`content ${activeSection.name === 'services' && zoomed && 'active'}`}>
-		<div class="content-box"><h1>web design. ux. development.</h1></div>
+		<div class="content-box"><h1>web design / ux / development</h1></div>
 	</div>
 </div>
 
@@ -483,7 +483,7 @@
 		h1 {
 			transform: scale(0.7);
 			text-align: right;
-			right: -1rem !important;
+			right: 1 !important;
 		}
 	}
 
