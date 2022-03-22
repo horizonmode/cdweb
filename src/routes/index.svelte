@@ -170,33 +170,33 @@
 					stroke: black;
 					stroke-width: 2;
 				}
-
 				.active .brick {
 					fill: var(--current-theme);
 					stroke: var(--current-theme);
 					pointer-events: all;
 				}
+				
 			</style>
 		</defs>
 
 		<g data-name="Layer 2" transform="rotate(-15, 100, 50)">
-			<g class={`menu-group ${activeSection.name === 'work' && 'active'}`}>
+			<g class={`menu-group ${activeSection.name === 'work'}`}>
 				<rect class="brick" y="34.7" width="98" height="65.33" rx="4.2" />
 			</g>
 
-			<g class={`menu-group ${activeSection.name === 'services' && 'active'}`}>
+			<g class={`menu-group ${activeSection.name === 'services'}`}>
 				<rect class="brick" x="102" y="34.7" width="98" height="30.67" rx="4.2" />
 			</g>
 
-			<g class={`menu-group ${activeSection.name === 'recognition' && 'active'}`}>
+			<g class={`menu-group ${activeSection.name === 'recognition'}`}>
 				<rect class="brick" x="102" y="69.3" width="98" height="30.67" rx="4.2" />
 			</g>
 
-			<g class={`menu-group ${activeSection.name === 'about' && 'active'}`}>
+			<g class={`menu-group ${activeSection.name === 'about'}`}>
 				<rect class="brick" width="115.8" height="30.67" rx="4.2" />
 			</g>
 
-			<g class={`menu-group ${activeSection.name === 'contact' && 'active'}`}>
+			<g class={`menu-group ${activeSection.name === 'contact'}`}>
 				<rect class="brick" x="119.3" width="80.4" height="30.67" rx="4.2" />
 			</g>
 		</g>
@@ -395,12 +395,14 @@
 
 	.wrapper #company-name {
 		position: fixed;
-		bottom: 1rem;
-		right: 1rem;
+		bottom: 2rem;
+		right: 2rem;
 		z-index: 10;
 		line-height: 4rem;
 		color: black;
 		border-radius: 5px;
+		transform: scale(0.8);
+		text-align: right;
 	}
 
 	.wrapper,
@@ -465,8 +467,8 @@
 	svg#logo2 {
 		height: 100px;
 		width: 100px;
-		top: 1rem;
-		left: 1rem;
+		top: 2rem;
+		left: 2rem;
 		position: absolute;
 	}
 
@@ -480,11 +482,17 @@
 			display: none;
 		}
 
+		h1#company-name {
+			transform: scale(0.5);
+			text-align: right;
+			right: -2.5rem !important;
+		}
+
 		h1 {
 			transform: scale(0.7);
-			text-align: right;
-			right: 1 !important;
 		}
+
+		
 	}
 
 	@media only screen and (max-width: 376px) {
