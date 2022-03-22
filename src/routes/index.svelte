@@ -74,7 +74,7 @@
 		);
 	};
 
-	const setViewBox = (e, sectionName, zoomValues) => {
+	const setViewBox = (e, sectionName, zoomValues, aspectRatioValues) => {
 		e.preventDefault();
 
 		// set active section if not already
@@ -90,15 +90,22 @@
 			tl.add('start');
 			tl.to(
 				'#logo',
-				{ attr: { viewBox: '75 10 75 75', preserveAspectRatio: 'xMidYMid slice' }, duration: 1 },
+				{
+					attr: {
+						viewBox: '75 10 75 75',
+						preserveAspectRatio: aspectRatioValues || 'xMidYMid slice'
+					},
+					duration: 1
+				},
 				'start'
 			);
 			tl.to(
 				'#logo',
 				{
-					width: 'auto',
-					height: mql.matches ? '50%' : '100%',
-					duration: 1
+					width: mql.matches ? 'auto' : '600px',
+					height: mql.matches ? '50%' : '600px',
+					duration: 1,
+					padding: mql.matches ? '5%' : 0
 				},
 				'start'
 			);
@@ -115,20 +122,17 @@
 			tl.to(
 				'#logo',
 				{
-					attr: { viewBox: zoomValues, preserveAspectRatio: 'xMinYMin slice' },
+					attr: { viewBox: zoomValues, preserveAspectRatio: aspectRatioValues || 'xMinYMin slice' },
 					duration: 1
 				},
 				'start'
 			);
-			tl.to(
-				'#logo',
-				{
-					width: '100%',
-					height: '100%',
-					duration: 1
-				},
-				'start'
-			);
+			tl.to('#logo', {
+				width: '100%',
+				height: '100%',
+				padding: 0,
+				duration: 1
+			});
 			tl.to('#container', { attr: { transform: 'rotate(0,100,50)' }, duration: 1 }, 'start');
 			tl.eventCallback('onComplete', () => {
 				zoomed = true;
@@ -311,8 +315,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'about' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'about', '104.1 2 32 28')}
-					on:touchstart={(e) => setViewBox(e, 'about', '104.1 2 32 28')}
+					on:mousedown={(e) => setViewBox(e, 'about', '88 3 30 30', 'xMaxYMax slice')}
+					on:touchstart={(e) => setViewBox(e, 'about', '88 3 30 30', 'xMaxYMax slice')}
 					on:mouseover={() => setActiveSection('about')}
 					on:focus={() => setActiveSection('about')}
 				/>
@@ -449,20 +453,13 @@
 	}
 
 	svg#logo {
-		height: 100%;
-		width: auto;
+		height: 600px;
+		width: 600px;
 	}
 
 	svg#logo.fullscreen {
 		width: 100%;
 		height: 100%;
-	}
-
-	@media only screen and (max-width: 600px) {
-		svg#logo {
-			height: 50%;
-			width: auto;
-		}
 	}
 
 	svg#logo2 {
@@ -475,6 +472,7 @@
 
 	@media only screen and (max-width: 600px) {
 		svg#logo {
+			padding: 5%;
 			height: 50%;
 			width: auto;
 		}
