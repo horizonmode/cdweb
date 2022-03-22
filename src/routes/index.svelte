@@ -248,8 +248,8 @@
 					height="65.33"
 					rx="4.2"
 					style="{`${activeSection.name === 'work' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'work', '70.4,33.5,70,63')}
-					on:touchstart={(e) => setViewBox(e, 'work', '70.4,33.5,70,63')}
+					on:mousedown={(e) => setViewBox(e, 'work', '36.4,33.5,63,63', 'xMaxYMin slice')}
+					on:touchstart={(e) => setViewBox(e, 'work', '36.4,33.5,63,63', 'xMaxYMin slice')}
 					on:mouseover={() => setActiveSection('work')}
 					on:focus={() => setActiveSection('work')}
 				/>
@@ -315,8 +315,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'about' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'about', '88 3 30 30', 'xMaxYMax slice')}
-					on:touchstart={(e) => setViewBox(e, 'about', '88 3 30 30', 'xMaxYMax slice')}
+					on:mousedown={(e) => setViewBox(e, 'about', '85 0 30 32', 'xMaxYMax slice')}
+					on:touchstart={(e) => setViewBox(e, 'about', '85 0 30 32', 'xMaxYMax slice')}
 					on:mouseover={() => setActiveSection('about')}
 					on:focus={() => setActiveSection('about')}
 				/>
