@@ -244,8 +244,8 @@
 					height="65.33"
 					rx="4.2"
 					style="{`${activeSection.name === 'work' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'work', '50,50,1,1')}
-					on:touchstart={(e) => setViewBox(e, 'work', '50,50,1,1')}
+					on:mousedown={(e) => setViewBox(e, 'work', '70.4,33.5,70,63')}
+					on:touchstart={(e) => setViewBox(e, 'work', '70.4,33.5,70,63')}
 					on:mouseover={() => setActiveSection('work')}
 					on:focus={() => setActiveSection('work')}
 				/>
@@ -267,8 +267,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'services' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'services', '100 33 28 28')}
-					on:touchstart={(e) => setViewBox(e, 'services', '100 33 28 28')}
+					on:mousedown={(e) => setViewBox(e, 'services', '100.8 33.5 28 28')}
+					on:touchstart={(e) => setViewBox(e, 'services', '100.8 33.5 28 28')}
 					on:mouseover={() => setActiveSection('services')}
 					on:focus={() => setActiveSection('services')}
 				/>
@@ -290,8 +290,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'recognition' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'recognition', '180 80 1 1')}
-					on:touchstart={(e) => setViewBox(e, 'recognition', '180 80 1 1')}
+					on:mousedown={(e) => setViewBox(e, 'recognition', '100.8 73.2 13 110')}
+					on:touchstart={(e) => setViewBox(e, 'recognition', '100.8 73.2 13 110')}
 					on:mouseover={() => setActiveSection('recognition')}
 					on:focus={() => setActiveSection('recognition')}
 				/>
@@ -311,8 +311,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'about' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'about', '100 1 1 1')}
-					on:touchstart={(e) => setViewBox(e, 'about', '100 1 1 1')}
+					on:mousedown={(e) => setViewBox(e, 'about', '104.1 2 32 28')}
+					on:touchstart={(e) => setViewBox(e, 'about', '104.1 2 32 28')}
 					on:mouseover={() => setActiveSection('about')}
 					on:focus={() => setActiveSection('about')}
 				/>
@@ -333,8 +333,8 @@
 					height="30.67"
 					rx="4.2"
 					style="{`${activeSection.name === 'contact' && 'filter:url(#shadow)'}`};"
-					on:mousedown={(e) => setViewBox(e, 'contact', '180 1 1 1')}
-					on:touchstart={(e) => setViewBox(e, 'contact', '180 1 1 1')}
+					on:mousedown={(e) => setViewBox(e, 'contact', '118.2 9 23 23')}
+					on:touchstart={(e) => setViewBox(e, 'contact', '118.2 9 23 23')}
 					on:mouseover={() => setActiveSection('contact')}
 					on:focus={() => setActiveSection('contact')}
 				/>
