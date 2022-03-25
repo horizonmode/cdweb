@@ -2,7 +2,6 @@
 	import gsap from 'gsap';
 	import { onMount } from 'svelte';
 
-
 	
 
 	const sections = [
@@ -282,7 +281,7 @@
 				<text
 					class={`${(transitioning || zoomed) && 'hide'}`}
 					x="105"
-					y="39"
+					y="63"
 					font-size="3"
 					fill="white">services</text
 				>
