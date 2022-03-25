@@ -2,6 +2,9 @@
 	import gsap from 'gsap';
 	import { onMount } from 'svelte';
 
+
+	
+
 	const sections = [
 		{ name: 'about', color: 'var(--color-light-grey)' },
 		{ name: 'contact', color: 'var(--color-light-green)' },
@@ -255,9 +258,9 @@
 				/>
 				<text
 					class={`${transitioning || (zoomed && 'hide')}`}
-					x="84"
-					y="40"
-					font-size="4"
+					x="87"
+					y="39"
+					font-size="3"
 					fill="white">work</text
 				>
 			</g>
@@ -279,8 +282,8 @@
 				<text
 					class={`${(transitioning || zoomed) && 'hide'}`}
 					x="105"
-					y="40"
-					font-size="4"
+					y="39"
+					font-size="3"
 					fill="white">services</text
 				>
 			</g>
@@ -302,8 +305,9 @@
 				<text
 					class={`${(transitioning || zoomed) && 'hide'}`}
 					x="105"
-					y="75"
-					font-size="4"
+					y="74"
+					font-size="3"
+					font-weight=900; 
 					fill="white">recognition</text
 				>
 			</g>
@@ -322,9 +326,9 @@
 				/>
 				<text
 					class={`${(transitioning || zoomed) && 'hide'}`}
-					x="99"
+					x="103"
 					y="29"
-					font-size="4"
+					font-size="3"
 					fill="white">about</text
 				>
 			</g>
@@ -346,7 +350,7 @@
 					class={`${(transitioning || zoomed) && 'hide'}`}
 					x="122"
 					y="29"
-					font-size="4"
+					font-size="3"
 					fill="white">contact</text
 				>
 			</g>
@@ -374,6 +378,7 @@
 
 	:global(body) {
 		font-family: 'Spartan', sans-serif;
+		font-weight: 600;
 		overflow: hidden;
 	}
 
